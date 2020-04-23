@@ -10,8 +10,10 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index')->name('admin.home');
-    
+    $router->get('/', 'HomeController@index')->name('admin.home');    
     $router->resource('categories', CategoryController::class);
+    $router->resource('continents', ContinentController::class);
+    $router->resource('countries', CountryController::class);
+    $router->resource('cities', CityController::class);
 
 });
