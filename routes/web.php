@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// vue welcome test page
+Route::get('/vuewelcome',function(){
+    return view('vuewelcome');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

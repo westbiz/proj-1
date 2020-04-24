@@ -30,8 +30,8 @@ class ContinentController extends AdminController
         $grid->column('parent_id', __('Parent id'));
         $grid->column('cn_name', __('Cn name'))->editable();
         $grid->column('en_name', __('En name'))->editable();
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }

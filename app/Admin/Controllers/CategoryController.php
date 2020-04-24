@@ -30,8 +30,8 @@ class CategoryController extends AdminController
         $grid->column('parent_id', __('Parent id'));
         $grid->column('name', __('Name'))->editable();
         $grid->column('describtion', __('Describtion'))->editable();
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
 
         return $grid;
     }

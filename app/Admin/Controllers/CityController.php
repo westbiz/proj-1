@@ -28,7 +28,7 @@ class CityController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('parent_id', __('Parent id'));
-        $grid->column('country_id', __('Country id'));
+        $grid->column('country.cname', __('Country id'))->label();
         $grid->column('state', __('State'));
         $grid->column('name', __('Name'));
         $grid->column('lower_name', __('Lower name'));
