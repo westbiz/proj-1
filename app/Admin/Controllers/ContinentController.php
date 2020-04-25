@@ -27,11 +27,11 @@ class ContinentController extends AdminController
         $grid = new Grid(new Continent());
 
         $grid->column('id', __('Id'));
-        $grid->column('parent_id', __('Parent id'));
-        $grid->column('cn_name', __('Cn name'))->editable();
-        $grid->column('en_name', __('En name'))->editable();
-        // $grid->column('created_at', __('Created at'));
-        // $grid->column('updated_at', __('Updated at'));
+        $grid->column('parent_id', __('父类'));
+        $grid->column('cn_name', __('中文名称'))->editable();
+        $grid->column('en_name', __('英文名称'))->editable();
+        // $grid->column('created_at', __('创建时间'));
+        // $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -47,11 +47,11 @@ class ContinentController extends AdminController
         $show = new Show(Continent::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('parent_id', __('Parent id'));
-        $show->field('cn_name', __('Cn name'));
-        $show->field('en_name', __('En name'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('parent_id', __('父类'));
+        $show->field('cn_name', __('中文名称'));
+        $show->field('en_name', __('英文名称'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -65,9 +65,9 @@ class ContinentController extends AdminController
     {
         $form = new Form(new Continent());
 
-        $form->number('parent_id', __('Parent id'));
-        $form->text('cn_name', __('Cn name'));
-        $form->text('en_name', __('En name'));
+        $form->number('parent_id', __('父类'));
+        $form->text('cn_name', __('中文名称'));
+        $form->text('en_name', __('英文名称'));
 
         return $form;
     }

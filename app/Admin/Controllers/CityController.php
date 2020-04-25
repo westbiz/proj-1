@@ -27,18 +27,18 @@ class CityController extends AdminController
         $grid = new Grid(new City());
 
         $grid->column('id', __('Id'));
-        $grid->column('parent_id', __('Parent id'));
-        $grid->column('country.cname', __('Country id'))->label();
-        $grid->column('state', __('State'));
-        $grid->column('name', __('Name'));
-        $grid->column('lower_name', __('Lower name'));
-        $grid->column('cn_state', __('Cn state'));
-        $grid->column('cn_name', __('Cn name'));
-        $grid->column('state_code', __('State code'));
-        $grid->column('city_code', __('City code'));
-        $grid->column('remark', __('Remark'));
-        // $grid->column('created_at', __('Created at'));
-        // $grid->column('updated_at', __('Updated at'));
+        $grid->column('parent_id', __('父类'));
+        $grid->column('country.cname', __('国家'))->label();
+        $grid->column('state', __('州'));
+        $grid->column('name', __('英文名称'));
+        $grid->column('lower_name', __('小写'));
+        $grid->column('cn_state', __('中文州名'));
+        $grid->column('cn_name', __('中文名称'));
+        $grid->column('state_code', __('州代码'));
+        $grid->column('city_code', __('城市代码'));
+        $grid->column('remark', __('简介'));
+        // $grid->column('created_at', __('创建时间'));
+        // $grid->column('updated_at', __('更新时间'));
 
         return $grid;
     }
@@ -54,18 +54,18 @@ class CityController extends AdminController
         $show = new Show(City::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('parent_id', __('Parent id'));
-        $show->field('country_id', __('Country id'));
-        $show->field('state', __('State'));
-        $show->field('name', __('Name'));
-        $show->field('lower_name', __('Lower name'));
-        $show->field('cn_state', __('Cn state'));
-        $show->field('cn_name', __('Cn name'));
-        $show->field('state_code', __('State code'));
-        $show->field('city_code', __('City code'));
-        $show->field('remark', __('Remark'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('parent_id', __('父类'));
+        $show->field('country_id', __('国家'));
+        $show->field('state', __('州'));
+        $show->field('name', __('英文名称'));
+        $show->field('lower_name', __('小写'));
+        $show->field('cn_state', __('中文州名'));
+        $show->field('cn_name', __('中文名称'));
+        $show->field('state_code', __('州代码'));
+        $show->field('city_code', __('城市代码'));
+        $show->field('remark', __('简介'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('更新时间'));
 
         return $show;
     }
@@ -79,16 +79,16 @@ class CityController extends AdminController
     {
         $form = new Form(new City());
 
-        $form->number('parent_id', __('Parent id'));
-        $form->number('country_id', __('Country id'));
-        $form->text('state', __('State'));
-        $form->text('name', __('Name'));
-        $form->text('lower_name', __('Lower name'));
-        $form->text('cn_state', __('Cn state'));
-        $form->text('cn_name', __('Cn name'));
-        $form->text('state_code', __('State code'));
-        $form->text('city_code', __('City code'));
-        $form->textarea('remark', __('Remark'));
+        $form->number('parent_id', __('父类'));
+        $form->number('country_id', __('国家'));
+        $form->text('state', __('州'));
+        $form->text('name', __('英文名称'));
+        $form->text('lower_name', __('小写'));
+        $form->text('cn_state', __('中文州名'));
+        $form->text('cn_name', __('中文名称'));
+        $form->text('state_code', __('州代码'));
+        $form->text('city_code', __('城市代码'));
+        $form->textarea('remark', __('简介'));
 
         return $form;
     }

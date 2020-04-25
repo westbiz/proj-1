@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Resources\CountryCollection;
+use App\Http\Resources\CountryResource;
+use App\Models\Country;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('countries/{id}', 'API\CountryController@show')->name('countries.show');
+
+Route::get('countries', 'API\CountryController@index')->name('countries.index');
