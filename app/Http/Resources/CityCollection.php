@@ -19,13 +19,25 @@ class CityCollection extends ResourceCollection
         return [
             'status'=> 200,
             'message'=>'OK!',
+
             'data' => $this->collection->map(function($result){
                 return $result->only(['id','cn_name','name']);
             }),
-            'country'=>$this->collection->first()->country->only(['id','cname'])
-            // 'links' => [
-            //     'self' => 'link-value',
-            // ],
+            'country'=>$this->collection->first()->country->only(['id','cname']),
+            
+        ];
+    }
+
+    // 该方法只有在资源是最外层被渲染数据的情况下才会返回一个被包含到资源响应中的元数据数组：
+    public function with($request)
+    {
+         return [
+                // 'meta' => [
+                //     'key' => 'value',
+                // ],
+            'links' => [
+                'nav' => url('api/v1/cities?per_page='.$request->get('per_page').'&page=2'),
+            ],
         ];
     }
 }

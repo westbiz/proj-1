@@ -18,37 +18,28 @@ class CountryCollection extends ResourceCollection
         return [
             'status'=> 200,
             'message'=>'OK!',
+
             'data' => $this->collection->map(function($query){
                 return $query->only(['id','cname','name']);
             }),
             'continent'=>$this->collection->first()->continent->only(['id','cn_name']),
-            // 'links' => [
-            //     'self' => 'link-value',
-            // ],
-
-
+            
+            
 
         ];
     }
 
     // 该方法只有在资源是最外层被渲染数据的情况下才会返回一个被包含到资源响应中的元数据数组：
-    // public function with($request)
-    // // {
-    // //    return [
-    // //         'msg' => [
-    // //             'rel'   => 'collection http://proj.test:8000/api/v1/countries/{id}/cities',
-    // //             'href'  => url('api/v1/countries'),
-    // //             'title' => 'list of countries',
-    // //             'type'  =>  'application/vnd.yourformat+json',
-    // //             // 'message'=>'OK',
-    // //             // 'status'=> 200,
-    // //         ],
-    // //     ];
+    public function with($request)
+    {
+         return [
+                // 'meta' => [
+                //     'key' => 'value',
+                // ],
+                'links' => [
+                    'nav' => url('api/v1/countries?per_page='.$request->get('per_page').'&page=2'),
+                ],
 
-    //      return [
-    //             'meta' => [
-    //                 'key' => 'value',
-    //             ],
-    //         ];
-    // }
+            ];
+    }
 }

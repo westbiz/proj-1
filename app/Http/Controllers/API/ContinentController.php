@@ -87,7 +87,7 @@ class ContinentController extends Controller
     public function getCountries($id)
     {
         //
-        $continents = Country::where('continent_id','=',$id)->paginate(null);
+        $continents = Country::where('continent_id','=',$id)->get();
         return new CountryCollection($continents);
     }
     

@@ -21,22 +21,15 @@ class CountryController extends Controller
     public function index(Request $request)
     {
         //
-        $count = $request->get('count');
-        $countries = Country::paginate($count);
+        // $page = $request->get('page');
+        $per_page = $request->get('per_page');
+        // $countries = new CountryCollection(Country::paginate($per_page, ['id','cname','name']));
+        $countries= Country::paginate($per_page);
         return new CountryCollection($countries);
-        // return (new CountryCollection($countries))
-        // ->withPath(url($request->route()->uri.'?count='.$count));
+        // return new CountryCollection(Country::all());
+        // return $countries->withPath(url('api/v1/countries?per_page='.$per_page));
 
 
-        // $data = CountryResource::collection($countries);
-        //             // dd($data->items);
-        // return response()->json([
-        //     'message'=>'OK',
-        //     'status'=> 200,
-        //     'data'=> $data,
-
-            // 'links'=>$data->resource,
-        // ]);
     }
 
     /**
@@ -99,7 +92,7 @@ class CountryController extends Controller
     public function getCities($id)
     {
         //
-        $cities = City::where('country_id','=',$id)->paginate(null);
+        $cities = City::where('country_id','=',$id)->get();
         return new CityCollection($cities);
     }
     
@@ -109,7 +102,7 @@ class CountryController extends Controller
         //
         $s = $request->get('s');
         // dd($s);
-        $countries= Country::where('cname','like','%'.$s.'%')->paginate(1);
+        $countries= Country::where('cname','like','%'.$s.'%')->get();
         // dd($countries->items()==null);
         if ($countries->items()==null) {
             return response()->json([

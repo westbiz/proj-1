@@ -18,10 +18,10 @@ class CityController extends Controller
     public function index(Request $request)
     {
         //请求页码数
-        $count = $request->get('count');
-        // $cities = City::paginate($count);
-        $cities = City::paginate($count);
+        $per_page = $request->get('per_page');
+        $cities = City::paginate($per_page);
         return new CityCollection($cities);
+        // return new CityResource(City::all());
     }
 
     /**
