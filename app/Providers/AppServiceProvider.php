@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\Schema; //add fixed sql
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        // Resource::withoutWrapping();
     }
 }

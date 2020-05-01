@@ -17,4 +17,10 @@ class Continent extends Model
     {
         return $this->hasMany(Country::class, 'continent_id');
     }
+
+
+    public function cities()
+    {
+    	return $this->hasManyThrough(City::class, Country::class, 'continent_id', 'country_id', 'id' ,'id');
+    }
 }

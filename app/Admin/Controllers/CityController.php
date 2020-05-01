@@ -27,13 +27,13 @@ class CityController extends AdminController
         $grid = new Grid(new City());
 
         $grid->column('id', __('Id'));
-        $grid->column('parent_id', __('父类'));
+        $grid->column('cn_name', __('中文名称'))->editable();
+        // $grid->column('parent_id', __('父类'));
         $grid->column('country.cname', __('国家'))->label();
         $grid->column('state', __('州'));
         $grid->column('name', __('英文名称'));
         $grid->column('lower_name', __('小写'));
         $grid->column('cn_state', __('中文州名'));
-        $grid->column('cn_name', __('中文名称'));
         $grid->column('state_code', __('州代码'));
         $grid->column('city_code', __('城市代码'));
         $grid->column('remark', __('简介'));

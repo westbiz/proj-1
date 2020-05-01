@@ -18,13 +18,13 @@ class RouteServiceProvider extends ServiceProvider
 
     /**
      * Define your route model bindings, pattern filters, etc.
-     *
+     *定义路由模型绑定，模式过滤器等
      * @return void
      */
     public function boot()
     {
-        //
-
+        //只有当 {id} 是数字时才会被调用
+        Route::pattern('id', '[0-9]+');
         parent::boot();
     }
 
