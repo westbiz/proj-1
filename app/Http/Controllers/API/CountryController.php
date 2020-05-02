@@ -49,12 +49,13 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Country $country)
     {
         //
-        $countries= Country::find($id);
+        return new CountryResource($country);
+        // $countries= Country::find($id);
+        // // return new CountryResource($countries);
         // return new CountryResource($countries);
-        return new CountryResource($countries);
         
     }
 

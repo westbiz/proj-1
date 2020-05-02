@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ContinentCollection extends ResourceCollection
 {
+
+    // 会尝试映射给定用户实例到  资源，如果要自定义这一行为，可以覆盖资源集合的 $collects 属性：
+    // public $collects = 'App\Http\Resources\Continent';
+
     /**
      * Transform the resource collection into an array.
      *
@@ -19,9 +23,8 @@ class ContinentCollection extends ResourceCollection
             'status'=> 200,
             'message'=>'OK!',
             
-            'data' => $this->collection->map(function($query){
-                return $query->only(['id','cn_name','en_name']);
-            }),
+            // 将映射到'App\Http\Resources\Continent';
+            'data' => $this->collection,
             
         ];
     }
@@ -34,7 +37,7 @@ class ContinentCollection extends ResourceCollection
                 //     'key' => 'value',
                 // ],
                 'links' => [
-                    'nav' => url('api/v1/continents'),
+                    'self' => url('api/v1/continents?per_page='.$request->get('per_page').'&page=1'),
                 ],
             ];
     }

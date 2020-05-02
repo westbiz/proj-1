@@ -38,6 +38,10 @@ class CityResource extends JsonResource
         return [
             'status'=> 200,
             'message'=>'OK!',
+
+            'links' => [
+                'self' => url('api/v1/cities/'. $this->id),
+            ],
         ];
     }
 }

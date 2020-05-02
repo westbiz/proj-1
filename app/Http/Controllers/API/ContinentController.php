@@ -21,10 +21,10 @@ class ContinentController extends Controller
     public function index(Request $request)
     {
         //
-        $count = $request->get('count');
+        $per_page = $request->get('per_page');
         // dd($request->route()->uri);
-        // $continents =Continent::paginate($count);
-        return new ContinentCollection(Continent::all());
+        $continents =Continent::paginate($per_page);
+        return new ContinentCollection($continents);
     }
 
     /**
@@ -45,12 +45,12 @@ class ContinentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Continent $continent)
     {
         //with('countries','cities') 资源类中避免 N+1 查询
-        // $continents= Continent::with('countries','cities')->findOrFail($id);
-        $continents= Continent::find($id);
-        return new ContinentResource($continents);
+        // $continents= Continent::with('countries','cities')->findOrFail($continent);
+        
+        return new ContinentResource($continent);
     }
 
     /**

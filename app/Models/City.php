@@ -14,6 +14,8 @@ class City extends Model
         'state_code', 'city_code', 'remark',
     ];
 
+    public $preserveKeys = true;
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id', 'id');

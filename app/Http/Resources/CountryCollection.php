@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CountryCollection extends ResourceCollection
 {
+
+    // 会尝试映射给定用户实例到  资源，如果要自定义这一行为，可以覆盖资源集合的 $collects 属性：
+    // public $collects = 'App\Http\Resources\Country';
+
     /**
      * Transform the resource collection into an array.
      *
@@ -18,6 +22,9 @@ class CountryCollection extends ResourceCollection
         return [
             'status'=> 200,
             'message'=>'OK!',
+
+            // 将映射到'App\Http\Resources\Country';
+            // 'data' => $this->collection,
 
             'data' => $this->collection->map(function($query){
                 return $query->only(['id','cname','name']);
@@ -37,7 +44,7 @@ class CountryCollection extends ResourceCollection
                 //     'key' => 'value',
                 // ],
                 'links' => [
-                    'nav' => url('api/v1/countries?per_page='.$request->get('per_page').'&page=2'),
+                    'self' => url('api/v1/countries?per_page='.$request->get('per_page').'&page=1'),
                 ],
 
             ];

@@ -41,11 +41,10 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(City $city)
     {
         //
-        $cities = City::find($id);
-        return new CityResource($cities);
+        return new CityResource($city);
     }
 
     /**

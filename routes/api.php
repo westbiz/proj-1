@@ -36,6 +36,28 @@ Route::get('/',function(){
 });
 
 
+
+// Route::group(['middleware'=>'auth:api'], function () {
+
+    // countries
+    Route::get('countries/search', 'API\CountryController@search')->name('countries.search');
+    Route::get('countries/{country}/cities', 'API\CountryController@getCities')->name('countries.getCities');
+    Route::get('countries/{country}', 'API\CountryController@show')->name('countries.show');
+    Route::get('countries', 'API\CountryController@index')->name('countries.index');
+
+
+    // continents
+    Route::get('continents/{continent}/countries', 'API\ContinentController@getCountries')->name('continents.getCountries');
+    Route::get('continents/{continent}', 'API\ContinentController@show')->name('continents.show');
+    Route::get('continents', 'API\ContinentController@index')->name('continents.index');
+
+    // cities
+    Route::get('cities/{city}', 'API\CityController@show')->name('cities.show');
+    Route::get('cities', 'API\CityController@index')->name('cities.index');
+
+// });
+
+
 // Route::get('/updateapitoken','API\ApiTokenController@update');
 
 
@@ -45,29 +67,7 @@ Route::get('response/error', function () {
         ->cookie('cookie_name', 'cookie_value');
 });
 
-// countries
-Route::get('countries/search', 'API\CountryController@search')->name('countries.search');
 
-Route::get('countries/{id}/cities', 'API\CountryController@getCities')->name('countries.getCities');
-
-Route::get('countries/{id}', 'API\CountryController@show')->name('countries.show');
-
-Route::get('countries', 'API\CountryController@index')->name('countries.index');
-
-
-// continents
-Route::get('continents/{id}/countries', 'API\ContinentController@getCountries')->name('continents.getCountries');
-
-Route::get('continents/{id}', 'API\ContinentController@show')->name('continents.show');
-
-Route::get('continents', 'API\ContinentController@index')->name('continents.index');
-
-
-
-// cities
-Route::get('cities/{id}', 'API\CityController@show')->name('cities.show');
-
-Route::get('cities', 'API\CityController@index')->name('cities.index');
 
 
 // 兜底路由应该总是放到应用注册的所有路由的最后。

@@ -32,6 +32,10 @@ class ContinentResource extends JsonResource
         return [
             'status'=> 200,
             'message'=>'OK!',
+
+            'links' => [
+                'self' => url('api/v1/continents/'. $this->id),
+            ],
         ];
     }
 }

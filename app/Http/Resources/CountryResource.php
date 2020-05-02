@@ -36,6 +36,10 @@ class CountryResource extends JsonResource
         return [
             'status'=> 200,
             'message'=>'OK!',
+            
+            'links' => [
+                'self' => url('api/v1/countries/'. $this->id),
+            ],
         ];
 	}
 

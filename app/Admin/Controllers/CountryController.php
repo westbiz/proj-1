@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Country;
+use App\Models\Continent;
+use Illuminate\Http\Request;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -75,7 +77,7 @@ class CountryController extends AdminController
     {
         $form = new Form(new Country());
 
-        $form->number('continent_id', __('大洲'));
+        $form->select('continent_id', __('大洲'))->options(Continent::pluck('cn_name','id'))->ajax('/admin/continents/getContinents');
         $form->text('cname', __('中文名称'));
         $form->text('name', __('英文名称'));
         $form->text('lower_name', __('小写'));
@@ -86,4 +88,13 @@ class CountryController extends AdminController
 
         return $form;
     }
+
+    public function getCountries(Request $request)
+    {
+        //
+        $q = $request->get('q');
+        return Country::where('cname','like',"%$q%")->paginate(null, ['id','cname as text']);
+    }    
+
+
 }

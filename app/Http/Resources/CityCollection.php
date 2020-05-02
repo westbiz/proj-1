@@ -6,6 +6,10 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CityCollection extends ResourceCollection
 {
+    // 会尝试映射给定用户实例到  资源，如果要自定义这一行为，可以覆盖资源集合的 $collects 属性：
+    // public $collects = 'App\Http\Resources\City';
+
+
     /**
      * Transform the resource collection into an array.
      *
@@ -20,8 +24,10 @@ class CityCollection extends ResourceCollection
             'status'=> 200,
             'message'=>'OK!',
 
-            'data' => $this->collection->map(function($result){
-                return $result->only(['id','cn_name','name']);
+            // 将映射到'App\Http\Resources\City';
+            // 'data' => $this->collection,
+            'data' => $this->collection->map(function($query){
+                return $query->only(['id','cname','name']);
             }),
             'country'=>$this->collection->first()->country->only(['id','cname']),
             

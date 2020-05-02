@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\City;
+use App\Models\Country;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -80,7 +81,7 @@ class CityController extends AdminController
         $form = new Form(new City());
 
         $form->number('parent_id', __('父类'));
-        $form->number('country_id', __('国家'));
+        $form->select('country_id', __('国家'))->options(Country::pluck('cname','id'))->ajax('/admin/countries/getCountries');
         $form->text('state', __('州'));
         $form->text('name', __('英文名称'));
         $form->text('lower_name', __('小写'));

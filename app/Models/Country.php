@@ -14,6 +14,8 @@ class Country extends Model
         'full_cname', 'remark',
     ];
 
+    public $preserveKeys = true;
+
     /**
      * 创建一个新的Eloquent集合实例
      *

@@ -13,6 +13,10 @@ class Continent extends Model
         'parent_id','cn_name','en_name'
     ];
 
+
+    public $preserveKeys = true;
+    
+
     public function countries()
     {
         return $this->hasMany(Country::class, 'continent_id');

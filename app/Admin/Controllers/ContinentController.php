@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Continent;
+use Illuminate\Http\Request;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -71,4 +72,13 @@ class ContinentController extends AdminController
 
         return $form;
     }
+
+    public function getContinents(Request $request)
+    {
+        //
+        $q = $request->get('q');
+        return Continent::where('cn_name','like',"%$q%")->paginate(null,['id','cn_name as text']);
+    }
+
+
 }
