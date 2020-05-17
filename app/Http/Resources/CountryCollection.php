@@ -18,22 +18,15 @@ class CountryCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-        return [
-            'status'=> 200,
-            'message'=>'OK!',
-
-            // 将映射到'App\Http\Resources\Country';
-            // 'data' => $this->collection,
-
-            'data' => $this->collection->map(function($query){
-                return $query->only(['id','cname','name']);
-            }),
-            'continent'=>$this->collection->first()->continent->only(['id','cn_name']),
-            
-            
-
-        ];
+        return parent::toArray($request);
+        // return [
+        //     // 将映射到'App\Http\Resources\Country';
+        //     // 'data' => $this->collection,
+        //     'data' => $this->collection->map(function($query){
+        //         return $query->only(['id','cn_name','en_name']);
+        //     }),
+        //     'continent'=>$this->collection->first()->continent->only(['id','cn_name']),
+        // ];
     }
 
     // 该方法只有在资源是最外层被渲染数据的情况下才会返回一个被包含到资源响应中的元数据数组：

@@ -18,17 +18,19 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
         // $page = $request->get('page');
-        $per_page = $request->get('per_page');
+        // $per_page = $request->get('per_page');
         // $countries = new CountryCollection(Country::paginate($per_page, ['id','cname','name']));
-        $countries= Country::paginate($per_page);
-        return new CountryCollection($countries);
-        // return new CountryCollection(Country::all());
-        // return $countries->withPath(url('api/v1/countries?per_page='.$per_page));
-
+        // $countries= Country::paginate($per_page);
+        // return new CountryCollection($countries);
+        $countries = Country::all();
+        return response()->json([
+            'success' => true,
+            'data' => $countries
+        ]);        
 
     }
 
@@ -49,13 +51,25 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Country $country)
+    public function show($id)
     {
         //
-        return new CountryResource($country);
+        // return new CountryResource($country);
         // $countries= Country::find($id);
         // // return new CountryResource($countries);
         // return new CountryResource($countries);
+        $data = Country::find($id);
+        $country = new CountryResource($data);
+        if (!$country->resource) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Country ' .$id. ' not be found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $country
+        ], 200);
         
     }
 
@@ -93,8 +107,18 @@ class CountryController extends Controller
     public function getCities($id)
     {
         //
-        $cities = City::where('country_id','=',$id)->get();
-        return new CityCollection($cities);
+        $data = Country::with('cities')->find($id);
+        $country = new CountryResource($data);
+        if (!$country->resource) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Country ' .$id. ' not be found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $country
+        ], 200);   
     }
     
 

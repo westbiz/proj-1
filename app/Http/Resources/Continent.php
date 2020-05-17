@@ -19,5 +19,15 @@ class Continent extends JsonResource
             'id' => $this->id,
             'text' => $this->cn_name,
         ];
+
+        // return [
+        //     'groups' => $this->cn_name,
+        //     'items' => $this->countries->map(function($query){
+        //         return $query->only([
+        //             'id',
+        //             'cn_name'
+        //         ]);
+        //     }),
+        // ];
     }
 }

@@ -28,15 +28,25 @@ class CountryController extends AdminController
     {
         $grid = new Grid(new Country());
 
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->where(function($query){
+                $query->where('cn_name', 'like', "%{$this->input}%");
+            }, '关键字搜索');
+        });
+
         $grid->column('id', __('Id'));
-        $grid->column('cname', __('中文名称'))->editable();
+        $grid->column('cn_name', __('中文名称'))->editable();
         $grid->column('continent.cn_name', __('大洲'))->label('info');
-        $grid->column('name', __('英文名称'));
-        $grid->column('lower_name', __('小写'));
+        $grid->column('en_name', __('英文名称'));
+        // $grid->column('lower_name', __('小写'));
         $grid->column('country_code', __('代码'));
-        $grid->column('full_name', __('英文全称'));
+        $grid->column('full_name', __('英文全称'))->limit(50);
         $grid->column('full_cname', __('中文全称'));
-        $grid->column('remark', __('简介'));
+        $grid->column('remark', __('简介'))->limit(10);
+        $grid->column('active', __('激活'))->bool();
         // $grid->column('created_at', __('创建时间'));
         // $grid->column('updated_at', __('更新时间'));
 
@@ -54,9 +64,9 @@ class CountryController extends AdminController
         $show = new Show(Country::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('cname', __('中文名称'));        
+        $show->field('cn_name', __('中文名称'));        
         $show->field('continent_id', __('大洲'));
-        $show->field('name', __('英文名称'));
+        $show->field('en_name', __('英文名称'));
         $show->field('lower_name', __('小写'));
         $show->field('country_code', __('代码'));
         $show->field('full_name', __('英文全称'));
@@ -78,8 +88,8 @@ class CountryController extends AdminController
         $form = new Form(new Country());
 
         $form->select('continent_id', __('大洲'))->options(Continent::pluck('cn_name','id'))->ajax('/admin/continents/getContinents');
-        $form->text('cname', __('中文名称'));
-        $form->text('name', __('英文名称'));
+        $form->text('cn_name', __('中文名称'));
+        $form->text('en_name', __('英文名称'));
         $form->text('lower_name', __('小写'));
         $form->text('country_code', __('代码'));
         $form->text('full_name', __('英文全称'));
@@ -93,7 +103,7 @@ class CountryController extends AdminController
     {
         //
         $q = $request->get('q');
-        return Country::where('cname','like',"%$q%")->paginate(null, ['id','cname as text']);
+        return Country::where('cn_name','like',"%$q%")->paginate(null, ['id','cn_name as text']);
     }    
 
 

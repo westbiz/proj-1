@@ -27,17 +27,33 @@ class CityController extends AdminController
     {
         $grid = new Grid(new City());
 
+        // 在`$grid`实例上操作
+        $grid->expandFilter();
+        $grid->filter(function($filter){
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            // 在这里添加字段过滤器
+            $filter->where(function($query){
+                $query->whereHas('country', function($query){
+                    $query->where('cn_name', 'like', "%{$this->input}%")
+                        ;
+                })->orWhere('cn_name', 'like', "%{$this->input}%")
+                    ->orWhere('cn_state', 'like', "%{$this->input}%");
+            }, '关键字搜索');
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('cn_name', __('中文名称'))->editable();
         // $grid->column('parent_id', __('父类'));
-        $grid->column('country.cname', __('国家'))->label();
+        $grid->column('country.cn_name', __('国家'))->label();
         $grid->column('state', __('州'));
-        $grid->column('name', __('英文名称'));
+        $grid->column('en_name', __('英文名称'));
         $grid->column('lower_name', __('小写'));
         $grid->column('cn_state', __('中文州名'));
         $grid->column('state_code', __('州代码'));
         $grid->column('city_code', __('城市代码'));
         $grid->column('remark', __('简介'));
+        $grid->column('active', __('激活'))->bool();
         // $grid->column('created_at', __('创建时间'));
         // $grid->column('updated_at', __('更新时间'));
 
@@ -57,11 +73,11 @@ class CityController extends AdminController
         $show->field('id', __('Id'));
         $show->field('parent_id', __('父类'));
         $show->field('country_id', __('国家'));
-        $show->field('state', __('州'));
-        $show->field('name', __('英文名称'));
+        $show->field('cn_name', __('中文名称')); 
+        $show->field('cn_state', __('中文州名'));               
+        $show->field('en_state', __('州'));
+        $show->field('en_name', __('英文名称'));
         $show->field('lower_name', __('小写'));
-        $show->field('cn_state', __('中文州名'));
-        $show->field('cn_name', __('中文名称'));
         $show->field('state_code', __('州代码'));
         $show->field('city_code', __('城市代码'));
         $show->field('remark', __('简介'));
@@ -81,12 +97,12 @@ class CityController extends AdminController
         $form = new Form(new City());
 
         $form->number('parent_id', __('父类'));
-        $form->select('country_id', __('国家'))->options(Country::pluck('cname','id'))->ajax('/admin/countries/getCountries');
-        $form->text('state', __('州'));
-        $form->text('name', __('英文名称'));
-        $form->text('lower_name', __('小写'));
+        $form->select('country_id', __('国家'))->options(Country::pluck('cn_name','id'))->ajax('/admin/countries/getCountries');
+        $form->text('cn_name', __('中文名称'));        
         $form->text('cn_state', __('中文州名'));
-        $form->text('cn_name', __('中文名称'));
+        $form->text('state', __('州'));
+        $form->text('en_name', __('英文名称'));
+        $form->text('lower_name', __('小写'));
         $form->text('state_code', __('州代码'));
         $form->text('city_code', __('城市代码'));
         $form->textarea('remark', __('简介'));

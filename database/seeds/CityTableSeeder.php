@@ -13,16 +13,16 @@ class CityTableSeeder extends Seeder
     {
         //
         DB::table('tx_cities')->insert([
-            'country_id'=> 1,
             'parent_id'=> 0,
-            'state'=> Str::random(10),
-            'name'=> Str::random(10),
+            'country_id'=> 1,
+            'cn_name'=> Str::random(10),
+            'en_name'=> Str::random(10),
             'lower_name'=> Str::random(10),
             'cn_state'=> Str::random(10),
-            'cn_name'=> Str::random(10),
+            'en_state'=> Str::random(10),
             'state_code'=> Str::random(10),
             'city_code'=> Str::random(10),
-            'remark'=> Str::random(10),
+            'active'=> 1,
         ]);
     }
 }

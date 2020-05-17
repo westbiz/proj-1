@@ -17,17 +17,17 @@ class CountryResource extends JsonResource
         // return parent::toArray($request);
         return  [
             'id' => $this->id,
-            'cname' => $this->cname,
+            'cn_name' => $this->cn_name,
             'continent' => $this->continent->cn_name, 
-            'name' => $this->name, 
+            'en_name' => $this->en_name, 
             'lower_name' => $this->lower_name,
             'country_code' => $this->country_code, 
-            'full_name' => $this->full_name, 
             'full_cname' => $this->full_cname, 
+            'full_name' => $this->full_name, 
             'remark' => $this->remark,
             'cities' => CityResource::collection($this->whenLoaded('cities')),
-            // 'created_at'=> (string)$this->created_at,
-            // 'updated_at'=> (string)$this->updated_at,
+            'created_at'=> (string)$this->created_at,
+            'updated_at'=> (string)$this->updated_at,
         ];
     }
 

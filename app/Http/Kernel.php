@@ -35,9 +35,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class, 
+            // --使用 JavaScript 接入 API
         ],
 
         'api' => [
+            \App\Http\Middleware\EncryptCookies::class, 
+            \Illuminate\Session\Middleware\StartSession::class,
             'throttle:60,1',
             // 'auth:api',
             'bindings',
@@ -61,7 +65,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // 'auth.api' => \App\Http\Middleware\WebToken::class,
+        // 'client_credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
+        
     ];
 
     /**

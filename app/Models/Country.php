@@ -10,8 +10,7 @@ class Country extends Model
     protected $table='tx_countries';
 
     protected $fillable=[
-        'continent_id', 'name', 'lower_name','country_code', 'full_name', 'cname',
-        'full_cname', 'remark',
+        'continent_id', 'cn_name', 'en_name', 'lower_name', 'full_cname', 'full_name', 'country_code', 'remark', 'active',
     ];
 
     public $preserveKeys = true;

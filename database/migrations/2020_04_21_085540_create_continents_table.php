@@ -29,6 +29,6 @@ class CreateContinentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('continents');
+        Schema::dropIfExists('tx_continents');
     }
 }

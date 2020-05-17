@@ -18,15 +18,15 @@ class ContinentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-        return [
-            'status'=> 200,
-            'message'=>'OK!',
+        return parent::toArray($request);
+        // return [
+        //     // 'status'=> 200,
+        //     // 'message'=>'OK!',
             
-            // 将映射到'App\Http\Resources\Continent';
-            'data' => $this->collection,
+        //     // 将映射到'App\Http\Resources\Continent';
+        //     'data' => $this->collection,
             
-        ];
+        // ];
     }
 
     // 该方法只有在资源是最外层被渲染数据的情况下才会返回一个被包含到资源响应中的元数据数组：

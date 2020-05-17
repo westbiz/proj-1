@@ -10,8 +10,7 @@ class City extends Model
     protected $table='tx_cities';
 
     protected $fillable=[
-        'country_id', 'parent_id', 'state', 'name', 'lower_name', 'cn_state', 'cn_name',
-        'state_code', 'city_code', 'remark',
+        'country_id', 'parent_id', 'cn_name', 'en_name', 'lower_name', 'cn_state','en_state', 'state_code', 'city_code', 'remark', 'active',
     ];
 
     public $preserveKeys = true;

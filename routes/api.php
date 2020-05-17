@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-// use App\Http\Resources\CountryCollection;
-// use App\Http\Resources\CountryResource;
-use App\Models\City;
-use App\Http\Resources\CityResource;
+use App\Http\Resources\TypeResource;
+use App\Models\Type;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,19 +39,28 @@ Route::get('/',function(){
 
     // countries
     Route::get('countries/search', 'API\CountryController@search')->name('countries.search');
-    Route::get('countries/{country}/cities', 'API\CountryController@getCities')->name('countries.getCities');
-    Route::get('countries/{country}', 'API\CountryController@show')->name('countries.show');
+    Route::get('countries/{id}/cities', 'API\CountryController@getCities')->name('countries.getCities');
+    Route::get('countries/{id}', 'API\CountryController@show')->name('countries.show');
     Route::get('countries', 'API\CountryController@index')->name('countries.index');
 
 
     // continents
-    Route::get('continents/{continent}/countries', 'API\ContinentController@getCountries')->name('continents.getCountries');
-    Route::get('continents/{continent}', 'API\ContinentController@show')->name('continents.show');
+    Route::get('continents/{id}/countries', 'API\ContinentController@getCountries')->name('continents.getCountries');
+    Route::get('continents/{id}', 'API\ContinentController@show')->name('continents.show');
     Route::get('continents', 'API\ContinentController@index')->name('continents.index');
 
     // cities
-    Route::get('cities/{city}', 'API\CityController@show')->name('cities.show');
+    Route::get('cities/{id}', 'API\CityController@show')->name('cities.show');
     Route::get('cities', 'API\CityController@index')->name('cities.index');
+
+
+    // types
+    Route::get('types', function(){
+        return TypeResource::collection(Type::all());
+    });
+    Route::get('types/{id}', function($id){
+        return new TypeResource(Type::find($id));
+    });
 
 // });
 
@@ -69,6 +76,12 @@ Route::get('response/error', function () {
 
 
 
+
+// vue 路由
+
+// Route::get('continents', 'API\ContinentController@index')->name('continents.index');
+// Route::get('continents/{id}', 'API\ContinentController@show')->name('continents.show');
+// Route::post('continents', 'API\ContinentController@store')->name('continents.store');
 
 // 兜底路由应该总是放到应用注册的所有路由的最后。
 // Route::fallback(function () {

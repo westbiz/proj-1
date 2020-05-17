@@ -21,10 +21,15 @@ class ContinentController extends Controller
     public function index(Request $request)
     {
         //
-        $per_page = $request->get('per_page');
-        // dd($request->route()->uri);
-        $continents =Continent::paginate($per_page);
-        return new ContinentCollection($continents);
+        // $per_page = $request->get('per_page');
+        // // dd($request->route()->uri);
+        // $continents =Continent::paginate($per_page);
+        // return new ContinentCollection($continents);
+        $continents = Continent::all();
+        return response()->json([
+            'success' => true,
+            'data' => $continents
+        ]);
     }
 
     /**
@@ -45,12 +50,23 @@ class ContinentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Continent $continent)
+    public function show($id)
     {
         //with('countries','cities') 资源类中避免 N+1 查询
         // $continents= Continent::with('countries','cities')->findOrFail($continent);
-        
-        return new ContinentResource($continent);
+        // return new ContinentResource($continent);
+        $data = Continent::find($id);
+        $continent = new ContinentResource($data);
+        if (!$continent->resource) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Continent ' .$id. ' not be found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $continent
+        ], 200);
     }
 
     /**
@@ -64,9 +80,18 @@ class ContinentController extends Controller
     {
         //
         $continent = Continent::findOrFail($id);
-        $continent->update($request->all());
+        $updated = $continent->fill($request->all())->save();
 
-        return $continent;
+        if ($updated) {
+            return response()->json([
+                'success' => true
+            ]);
+        }
+        else
+            return response()->json([
+                'success' => false,
+                'message' => 'Content could not be updated!'
+            ], 500);
     }
 
     /**
@@ -87,8 +112,21 @@ class ContinentController extends Controller
     public function getCountries($id)
     {
         //
-        $continents = Country::where('continent_id','=',$id)->get();
-        return new CountryCollection($continents);
+        // $continents = Country::where('continent_id','=',$id)->get();
+        // return new CountryCollection($continents);
+        $data = Continent::with('countries')->find($id);
+        $continent = new ContinentResource($data);
+        if (!$continent->resource) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Continent ' .$id. ' not be found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $continent
+        ], 200);
+
     }
     
 

@@ -12,10 +12,12 @@
         "doctrine/dbal": "^2.10",
         "encore/laravel-admin": "^1.7",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
+        "intervention/image": "^2.5",
         "laravel/framework": "^6.0",
+        "laravel/passport": "^8.4",
         "laravel/tinker": "^1.0",
-        "laravelcollective/html": "6.0.*",
-        "intervention/image": "^2.5"
+        "laravelcollective/html": "6.0.*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

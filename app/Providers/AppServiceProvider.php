@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
-// use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\Schema; //add fixed sql
 
 class AppServiceProvider extends ServiceProvider
 {
+    
+
+
     /**
      * Register any application services.
      *
@@ -28,5 +32,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         // Resource::withoutWrapping();
+
     }
 }

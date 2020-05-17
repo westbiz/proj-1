@@ -18,20 +18,19 @@ class CityCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
+        return parent::toArray($request);
 
-        return [
-            'status'=> 200,
-            'message'=>'OK!',
+        // return [
 
-            // 将映射到'App\Http\Resources\City';
-            // 'data' => $this->collection,
-            'data' => $this->collection->map(function($query){
-                return $query->only(['id','cname','name']);
-            }),
-            'country'=>$this->collection->first()->country->only(['id','cname']),
+
+        //     // 将映射到'App\Http\Resources\City';
+        //     // 'data' => $this->collection,
+        //     // 'data' => $this->collection->map(function($query){
+        //     //     return $query->only(['id','cn_name','en_name']);
+        //     // }),
+        //     'country'=>$this->collection->first()->country->only(['id','cn_name']),
             
-        ];
+        // ];
     }
 
     // 该方法只有在资源是最外层被渲染数据的情况下才会返回一个被包含到资源响应中的元数据数组：

@@ -18,5 +18,8 @@ Route::group([
     $router->resource('countries', CountryController::class);
     $router->resource('cities', CityController::class);
     $router->resource('users', UserController::class);
+    $router->resource('sights', SightController::class);
+    $router->get('types/getTypes', 'TypeController@getTypes');
+    $router->resource('types', TypeController::class);
 
 });

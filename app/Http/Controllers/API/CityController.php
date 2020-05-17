@@ -15,13 +15,16 @@ class CityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //请求页码数
-        $per_page = $request->get('per_page');
-        $cities = City::paginate($per_page);
-        return new CityCollection($cities);
-        // return new CityResource(City::all());
+        // $per_page = $request->get('per_page');
+        // $cities = City::paginate($per_page);
+        $cities = City::all();
+        return response()->json([
+            'success' => true,
+            'data' => $cities
+        ]);   
     }
 
     /**
@@ -41,10 +44,24 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function show(City $city)
+    public function show($id)
     {
         //
-        return new CityResource($city);
+        // $city = City::find($id);
+        // return new CityResource($city);
+
+        $data = City::find($id);
+        $city = new CityResource($data);
+        if (!$city->resource) {
+            return response()->json([
+                'success' => false,
+                'message' => 'City ' .$id. ' not be found!'
+            ], 400);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $city
+        ], 200);
     }
 
     /**
@@ -54,7 +71,7 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -65,7 +82,7 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy($city)
     {
         //
     }
