@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Resources\TypeResource;
-use App\Models\Type;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,12 +54,11 @@ Route::get('/',function(){
 
 
     // types
-    Route::get('types', function(){
-        return TypeResource::collection(Type::all());
-    });
-    Route::get('types/{id}', function($id){
-        return new TypeResource(Type::find($id));
-    });
+    Route::get('types', 'API\TypeController@index');
+    Route::get('types/getparent', 'API\TypeController@getParent');
+    Route::get('types/getallchildren', 'API\TypeController@getAllChildren');
+    Route::get('types/getchildren/{id}', 'API\TypeController@getChildren');
+    Route::get('types/{id}', 'API\TypeController@show');
 
 // });
 

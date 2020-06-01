@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use App\Http\Resources\TypeResource;
 
 class TypeController extends Controller
 {
@@ -16,6 +17,8 @@ class TypeController extends Controller
     public function index()
     {
         //
+        $types = Type::all();
+        return TypeResource::collection($types);
     }
 
     /**
@@ -27,6 +30,7 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         //
+         return new TypeResource(Type::find($id));
     }
 
     /**
@@ -35,9 +39,11 @@ class TypeController extends Controller
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function show(Type $type)
+    public function show($id)
     {
         //
+        $type = Type::with('childTypes')->find($id);
+        return new TypeResource($type);
     }
 
     /**
@@ -62,4 +68,23 @@ class TypeController extends Controller
     {
         //
     }
+
+    public function getParent()
+    {
+        $types = Type::where('parent_id', 0)->get();
+        return TypeResource::collection($types);
+    }
+
+    public function getChildren($id)
+    {
+        $types = Type::where('parent_id', $id)->get();
+        return TypeResource::collection($types);
+    }
+
+    public function getAllChildren()
+    {
+        $types = Type::where('parent_id', '<>', 0)->get();
+        return TypeResource::collection($types);
+    }
+
 }

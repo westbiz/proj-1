@@ -18,12 +18,12 @@ class Type extends Model
 
     public function parentType()
     {
-        return $this->hasMany(Type::class, 'parent_id', 'id');
+        return $this->belongsTo(Type::class, 'parent_id', 'id');
     }
 
     public function childTypes()
     {
-         return $this->belongsTo(Type::class, 'parent_id', 'id');
+         return $this->hasMany(Type::class, 'parent_id', 'id');
     }
 
     public function sights()

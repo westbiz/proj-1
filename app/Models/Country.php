@@ -13,7 +13,7 @@ class Country extends Model
         'continent_id', 'cn_name', 'en_name', 'lower_name', 'full_cname', 'full_name', 'country_code', 'remark', 'active',
     ];
 
-    public $preserveKeys = true;
+    // public $preserveKeys = true;
 
     /**
      * 创建一个新的Eloquent集合实例
@@ -28,7 +28,7 @@ class Country extends Model
 
     public function continent()
     {
-        return $this->belongsTo(Continent::class, 'continent_id', 'id');
+        return $this->belongsTo(Continent::class);
     }
 
     public function cities()

@@ -14,12 +14,12 @@ class Continent extends Model
     ];
 
 
-    public $preserveKeys = true;
+    // public $preserveKeys = true;
     
 
     public function countries()
     {
-        return $this->hasMany(Country::class, 'continent_id');
+        return $this->hasMany(Country::class, 'continent_id', 'id');
     }
 
 

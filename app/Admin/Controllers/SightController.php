@@ -3,11 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Sight;
+use App\Models\Continent;
 use App\Models\Type;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\TypeResource;
 
 class SightController extends AdminController
 {
@@ -84,7 +87,40 @@ class SightController extends AdminController
     {
         $form = new Form(new Sight());
 
-        $form->select('type_id', __('类别'))->options(Type::pluck('name', 'id'))->ajax('/admin/types/getTypes');
+
+     //    $group = [
+     //        [
+     //        'label' => 'xxxx',
+     //        'options' => [
+     //            1 => 'foo',
+     //            2 => 'bar',
+                
+     //        ],
+     //     ]
+     // ];
+
+        $parents = Type::where('parent_id',0)->has('childTypes')->get();
+        $group = [];
+        
+        foreach ($parents as $key=>$value) {
+
+
+   
+               $group[$key]['label']=$value->name;
+
+
+            $children = Type::where('parent_id', '=',$value->id)->get();
+            foreach ($children as $k=>$v) {
+
+                $group[$key]['options'][$v->id]='  |---'.$v->name;
+            }
+
+
+        }
+
+        // dd($group);
+
+        $form->select('type_id', __('类别'))->options(Type::pluck('name', 'id'))->groups($group);
         $form->number('parent_id', __('父类'));
         $form->number('city_id', __('城市'));
         $form->text('cn_name', __('名称'));

@@ -16,7 +16,7 @@ class TypeController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Models\Type';
+    protected $title = 'Type | 类别';
 
     /**
      * Make a grid builder.
@@ -28,9 +28,9 @@ class TypeController extends AdminController
         $grid = new Grid(new Type());
 
         $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('parent_id', __('Parent id'));
-        $grid->column('description', __('Description'));
+        $grid->column('name', __('名称'));
+        $grid->column('parentType.name', __('父类'))->label();
+        $grid->column('description', __('描述'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
@@ -48,11 +48,19 @@ class TypeController extends AdminController
         $show = new Show(Type::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('parent_id', __('Parent id'));
-        $show->field('description', __('Description'));
+        $show->field('name', __('名称'));
+        // $show->field('parent_id', __('Parent id'));
+        $show->field('description', __('描述'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
+
+        // $show->parentType('parent_id', __('父类'));
+
+        $show->childTypes('子类', function($children){
+            $children->resource('/admin/types');
+            $children->id();
+            $children->name();
+        });
 
         return $show;
     }
@@ -66,9 +74,9 @@ class TypeController extends AdminController
     {
         $form = new Form(new Type());
 
-        $form->text('name', __('Name'));
-        $form->number('parent_id', __('Parent id'));
-        $form->text('description', __('Description'));
+        $form->text('name', __('名称'))->creationRules(['required', "unique:tx_types"]);
+        $form->select('parent_id', __('父类'))->options(Type::where('parent_id',0)->pluck('name','id'));
+        $form->text('description', __('描述'));
 
         return $form;
     }

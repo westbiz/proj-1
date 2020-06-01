@@ -13,7 +13,7 @@ class City extends Model
         'country_id', 'parent_id', 'cn_name', 'en_name', 'lower_name', 'cn_state','en_state', 'state_code', 'city_code', 'remark', 'active',
     ];
 
-    public $preserveKeys = true;
+    // public $preserveKeys = true;
 
     public function country()
     {

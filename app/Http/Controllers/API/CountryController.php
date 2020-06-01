@@ -20,10 +20,10 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        // Request $request
         // $page = $request->get('page');
         // $per_page = $request->get('per_page');
-        // $countries = new CountryCollection(Country::paginate($per_page, ['id','cname','name']));
+        // // $countries = new CountryCollection(Country::paginate($per_page, ['id','cn_name','en_name']));
         // $countries= Country::paginate($per_page);
         // return new CountryCollection($countries);
         $countries = Country::all();
@@ -127,7 +127,7 @@ class CountryController extends Controller
         //
         $s = $request->get('s');
         // dd($s);
-        $countries= Country::where('cname','like','%'.$s.'%')->get();
+        $countries= Country::where('cn_name','like','%'.$s.'%')->get();
         // dd($countries->items()==null);
         if ($countries->items()==null) {
             return response()->json([

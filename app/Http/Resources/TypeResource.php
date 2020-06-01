@@ -18,7 +18,9 @@ class TypeResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'text' => $this->name, 
+            'text' => $this->name,
+            // 'options' => Type::collection($this->childTypes),
+
         ];
     }
 }
