@@ -15,6 +15,11 @@ class City extends Model
 
     // public $preserveKeys = true;
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id', 'id');

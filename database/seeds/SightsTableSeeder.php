@@ -36,7 +36,6 @@ class SightsTableSeeder extends Seeder
 		for ($i=0; $i <10 ; $i++) { 
 			$type = Type::findOrFail(1);
 			Sight::create([
-				'type_id' => $type->id,
 				'parent_id' => 0,
 				'city_id' => 1,
 				'cn_name' => $faker->name,

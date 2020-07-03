@@ -21,5 +21,7 @@ Route::group([
     $router->resource('sights', SightController::class);
     $router->get('types/getTypes', 'TypeController@getTypes');
     $router->resource('types', TypeController::class);
+    $router->resource('brands', BrandController::class);
+    $router->resource('vehicles', VehicleController::class);
 
 });

@@ -15,6 +15,11 @@ class Country extends Model
 
     // public $preserveKeys = true;
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
     /**
      * 创建一个新的Eloquent集合实例
      *

@@ -15,7 +15,6 @@ class CreateSightsTable extends Migration
     {
         Schema::create('tx_sights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('type_id')->comment('类别id');
             $table->integer('parent_id')->default(0)->nullable()->comment('父_id');
             $table->integer('city_id')->nullable()->comment('城市');
             $table->string('cn_name',100)->nullable()->comment('名称');

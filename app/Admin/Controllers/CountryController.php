@@ -37,16 +37,37 @@ class CountryController extends AdminController
             }, '关键字搜索');
         });
 
+        // 规格选择器
+        $grid->selector(function(Grid\Tools\Selector $selector){
+            $continents = Continent::pluck('cn_name', 'id');
+            $selector->select('continent_id', '国家地区', $continents);
+            $selector->select('active', '状态', [
+                1 => '激活',
+                0 => '未激活',
+            ]);
+        });
+        // $grid->selector(function(Grid\Tools\Selector $selector){
+        //     $selector->select('active', '状态', [
+        //         1 => '激活',
+        //         0 => '关闭'
+        //     ]);
+        // });
+
         $grid->column('id', __('Id'));
         $grid->column('cn_name', __('中文名称'))->editable();
         $grid->column('continent.cn_name', __('大洲'))->label('info');
-        $grid->column('en_name', __('英文名称'));
+        $grid->column('en_name', __('英文名称'))->limit(20);
         // $grid->column('lower_name', __('小写'));
         $grid->column('country_code', __('代码'));
-        $grid->column('full_name', __('英文全称'))->limit(50);
+        $grid->column('full_name', __('英文全称'))->limit(20);
         $grid->column('full_cname', __('中文全称'));
         $grid->column('remark', __('简介'))->limit(10);
-        $grid->column('active', __('激活'))->bool();
+        $states = [
+            'on'  => ['value' => 1, 'text' => '打开', 'color' => 'primary'],
+            'off' => ['value' => 0, 'text' => '关闭', 'color' => 'default'],
+        ];
+        $grid->column('active', __('激活'))->switch($states)->sortable();
+        // $grid->column('active', __('激活'))->bool();
         // $grid->column('created_at', __('创建时间'));
         // $grid->column('updated_at', __('更新时间'));
 
@@ -95,6 +116,11 @@ class CountryController extends AdminController
         $form->text('full_name', __('英文全称'));
         $form->text('full_cname', __('中文全称'));
         $form->textarea('remark', __('简介'));
+        $states = [
+            'on'  => ['value' => 1, 'text' => '是', 'color' => 'success'],
+            'off' => ['value' => 0, 'text' => '否', 'color' => 'danger'],
+        ];
+        $form->switch('active', __('激活'))->states($states);
 
         return $form;
     }

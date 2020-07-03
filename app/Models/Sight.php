@@ -9,7 +9,6 @@ class Sight extends Model
     protected $table='tx_sights';
 
     protected $fillable=[
-    	'type_id',
 		'parent_id',
 		'city_id',
 		'cn_name',
@@ -29,9 +28,9 @@ class Sight extends Model
     // }
 
 
-    public function type()
+    public function types()
     {
-    	return $this->belongsTo(Type::class);
+    	return $this->belongsToMany(Type::class, 'tx_sight_types');
     }
 
     public function images()

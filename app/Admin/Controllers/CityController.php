@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\City;
 use App\Models\Country;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -42,6 +43,18 @@ class CityController extends AdminController
             }, '关键字搜索');
         });
 
+        // 规格选择器
+        
+        // dd($nations);
+        $grid->selector(function(Grid\Tools\Selector $selector){
+            $nations = Country::active()->pluck('cn_name', 'id');
+            $selector->select('country_id', '国家地区', $nations);
+            $selector->select('active', '状态', [
+                1 => '激活',
+                0 => '未激活',
+            ]);
+        });
+
         $grid->column('id', __('Id'));
         $grid->column('cn_name', __('中文名称'))->editable();
         // $grid->column('parent_id', __('父类'));
@@ -52,8 +65,18 @@ class CityController extends AdminController
         $grid->column('cn_state', __('中文州名'));
         $grid->column('state_code', __('州代码'));
         $grid->column('city_code', __('城市代码'));
-        $grid->column('remark', __('简介'));
-        $grid->column('active', __('激活'))->bool();
+        // $grid->column('remark', __('简介'))->limit(20);
+        $states = [
+            'on'  => ['value' => 1, 'text' => '是', 'color' => 'primary'],
+            'off' => ['value' => 0, 'text' => '否', 'color' => 'default'],
+        ];
+        $grid->column('active', __('激活'))->switch($states)->sortable();
+        // $grid->column('active', __('激活'))->bool();
+        $grid->column('管理')->display(function () {
+            if (Admin::user()->isRole('administrator')) {
+                return "<a href='sights/create?city={$this->id}'><i class='fa fa-plus-square'></i>景区</a>"."&nbsp;"."<a href='cities/{$this->id}/edit'><i class='fa fa-pencil-square'></i>编辑</a>"."&nbsp;"."<a href='cities/{$this->id}'><i class='fa fa-eye'></i>详细</a>";
+            }
+        });
         // $grid->column('created_at', __('创建时间'));
         // $grid->column('updated_at', __('更新时间'));
 

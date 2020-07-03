@@ -3,7 +3,9 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Type;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Controllers\AdminController;
+use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -26,13 +28,24 @@ class TypeController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Type());
-
+        // $grid->disableActions();
+      
         $grid->column('id', __('Id'));
-        $grid->column('name', __('名称'));
+        $grid->column('name', __('名称'))->display(function($name, $column){
+            if (!Admin::user()->isRole('administrator')) {
+                return $name;
+            }
+            return $column->editable();
+        });
         $grid->column('parentType.name', __('父类'))->label();
         $grid->column('description', __('描述'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        // $grid->column('created_at', __('Created at'));
+        // $grid->column('updated_at', __('Updated at'));
+        $grid->column('管理')->display(function () {
+            if (Admin::user()->isRole('administrator')) {
+                return "<a href='sights/create?type={$this->id}'><i class='fa fa-plus-square'></i>景区</a>"."&nbsp;"."<a href='types/{$this->id}/edit'><i class='fa fa-pencil-square'></i>编辑</a>"."&nbsp;"."<a href='types/{$this->id}'><i class='fa fa-eye'></i>详细</a>";
+            }
+        });
 
         return $grid;
     }
@@ -73,9 +86,15 @@ class TypeController extends AdminController
     protected function form()
     {
         $form = new Form(new Type());
+        $parent_id = request()->get('parent_id');
 
+        if ($parent_id) {
+             $form->select('parent_id', __('父类'))->options(Type::pluck('name','id'))->default($parent_id);
+        }
+        else {
+            $form->select('parent_id', __('父类'))->options(Type::where('parent_id',0)->pluck('name','id'))->default(0);
+        }
         $form->text('name', __('名称'))->creationRules(['required', "unique:tx_types"]);
-        $form->select('parent_id', __('父类'))->options(Type::where('parent_id',0)->pluck('name','id'));
         $form->text('description', __('描述'));
 
         return $form;

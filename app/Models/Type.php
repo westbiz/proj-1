@@ -28,6 +28,6 @@ class Type extends Model
 
     public function sights()
     {
-    	return $this->hasMany(Sight::class);
+    	return $this->belongsToMany(Sigth::class, 'tx_sight_types');
     }
 }
